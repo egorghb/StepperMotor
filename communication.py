@@ -6,10 +6,7 @@ import time
 ser = Serial('COM4', baudrate=9600)
 time.sleep(2)
 
-SPEED = 5
-
-
-links = [5]
+params = [0, 0, 0] # скорость, угол, направление
 
 def link_0_up():
     if 0 <= links[0] < 180:
@@ -23,10 +20,15 @@ def link_0_dn():
 
 
 def arduino_send():
-    ser.reset_input_buffer()
-    ser.write(links[0].to_bytes(1, byteorder='big', signed=0))
-
-    root.after(500, arduino_send)
+   ser.reset_input_buffer()
+   ser.write('$')
+   ser.write(params[0])
+   ser.write(' ')
+   ser.write(params[1])
+   ser.write(' ')
+   ser.write(params[2])
+   ser.write(';')
+   root.after(500, arduino_send)
 
 
 def arduino_read():
