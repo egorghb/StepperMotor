@@ -2,26 +2,23 @@
 
 #define dirPin 2
 #define stepPin 3
-#define motorInterfaceType 1
+#define motorInterFaceType 1
 
-int speed = 5;
+AccelStepper stepper(motorInterFaceType, stepPin, dirPin);
+
+int speed;
+bool dir = true;
 int data;
 
 void setup() {
+  stepper.setMaxSpeed(1000);
   Serial.begin(9600);
-
-  pinMode(dirPin, OUTPUT);
-  pinMode(stepPin, OUTPUT);
-
-  digitalWrite(stepPin, HIGH);
-  digitalWrite(dirPin, LOW);
 }
 
 void loop() {
-  digitalWrite(stepPin, HIGH);
-  delay(speed);
-  digitalWrite(stepPin, LOW);
-  delay(speed);
+  digitalWrite(dirPin, dir);
+  stepper.setSpeed(speed);
+  stepper.run();
 }
 
 void serialEvent() {
@@ -32,3 +29,5 @@ void serialEvent() {
     Serial.println("<");
   }
 }
+
+//
