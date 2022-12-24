@@ -1,8 +1,13 @@
 from tkinter import *
 from serial import Serial
+import time
 
 
-ser = Serial('COM4', baudrate=9600, timeout=0.01)
+ser = Serial('COM4', baudrate=9600)
+time.sleep(2)
+
+SPEED = 5
+
 
 links = [5]
 
